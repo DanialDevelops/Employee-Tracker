@@ -13,16 +13,6 @@ const db = mysql.createConnection(
   console.log(`Connected to the tracking_db database.`)
 );
 
-// const questions = [
-//   {
-//     type: "list",
-//     name: "userChoice",
-//     choices: ["View All Departments","View All Roles", "View all employees", "Add a department", "Add a role", "Add an employee"],
-//     message: "Select the operation to perform",
-//   },
-
-// ];
-
 function menu() {
   inquirer.prompt(questions.menu).then((data) => {
     switch (data.userChoice) {
@@ -40,6 +30,9 @@ function menu() {
         break;
       case "Add a role":
         addRole();
+        break;
+      case "Add an employee":
+        addEmployee();
         break;
     }
   });
@@ -82,8 +75,24 @@ function addDepartment() {
 function addRole() {
   inquirer.prompt(questions.addRole).then((data) => {
     console.log(data);
-    let { id, title, salary } = data;
-    db.query("INSERT INTO department (id, name) VALUES (?, ?)", [id, name]);
+    let { id, title, salary, departmentId } = data;
+    db.query(
+      "INSERT INTO roles (id, title, salary, departmentId) VALUES (?, ?, ?, ?)",
+      [id, title, salary, departmentId]
+    );
+    if (err) console.log(err);
+    console.table(data);
+    menu;
+  });
+}
+function addEmployee() {
+  inquirer.prompt(questions.addEmployee).then((data) => {
+    console.log(data);
+    let { id, firstName, lastName, roleId, managerId } = data;
+    db.query(
+      "INSERT INTO employee (id, firstName, lastName, roleId, managerId) VALUES (?, ?, ?, ?, ?)",
+      [id, firstName, lastName, roleId, managerId]
+    );
     if (err) console.log(err);
     console.table(data);
     menu;
