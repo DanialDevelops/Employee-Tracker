@@ -34,6 +34,12 @@ function menu() {
       case "Add an employee":
         addEmployee();
         break;
+      case "Add an employee":
+        addEmployee();
+        break;
+      case "Update an employee":
+        updateEmployee();
+        break;
     }
   });
 }
@@ -50,7 +56,7 @@ function viewAllRoles() {
   let query = "SELECT * FROM roles";
   db.query(query, (err, data) => {
     if (err) console.log(err);
-    console.table(data);
+      console.table(data);
     menu();
   });
 }
@@ -65,37 +71,68 @@ function viewAllEmployees() {
 function addDepartment() {
   inquirer.prompt(questions.addDept).then((data) => {
     console.log(data);
-    let { id, name } = data;
-    db.query("INSERT INTO department (id, name) VALUES (?, ?)", [id, name]);
-    if (err) console.log(err);
-    console.table(data);
-    menu;
+    let { dept } = data;
+    db.query(
+      "INSERT INTO department (name) VALUES (?)",
+      [dept],
+      (err, data) => {
+        if (err) console.log(err);
+        console.table(data);
+        viewAllDepartments();
+        menu();
+      }
+    );
   });
 }
 function addRole() {
   inquirer.prompt(questions.addRole).then((data) => {
     console.log(data);
-    let { id, title, salary, departmentId } = data;
+    let { title, salary, departmentId } = data;
     db.query(
-      "INSERT INTO roles (id, title, salary, departmentId) VALUES (?, ?, ?, ?)",
-      [id, title, salary, departmentId]
+      "INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)",
+      [title, salary, departmentId],
+      (err, data) => {
+        if (err) console.log(err);
+        console.table(data);
+        viewAllRoles();
+        menu();
+      }
     );
-    if (err) console.log(err);
-    console.table(data);
-    menu;
   });
 }
 function addEmployee() {
   inquirer.prompt(questions.addEmployee).then((data) => {
     console.log(data);
-    let { id, firstName, lastName, roleId, managerId } = data;
+    let { firstName, lastName, roleId, managerId } = data;
     db.query(
-      "INSERT INTO employee (id, firstName, lastName, roleId, managerId) VALUES (?, ?, ?, ?, ?)",
-      [id, firstName, lastName, roleId, managerId]
+      "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+      [firstName, lastName, roleId, managerId],
+      (err, data) => {
+        if (err) console.log(err);
+        console.table(data);
+        viewAllEmployees();
+        menu();
+      }
     );
-    if (err) console.log(err);
-    console.table(data);
-    menu;
+  });
+}
+function updateEmployee() {
+  inquirer.prompt(questions.updateEmployee).then((data) => {
+    console.log(data);
+    let { Name, roleId} = data
+    let firstName = Name.split(" ")[0]
+    let lastName = Name.split(" ")[1]
+    console.log(firstName, lastName)
+    db.query(
+      "UPDATE employee SET role_id = ? WHERE first_name = ? AND last_name = ?",
+      [roleId, firstName, lastName],
+      (err, data) => {
+        if (err) console.log(err);
+        console.table(data);
+        viewAllEmployees()
+        menu();
+      }
+    );
   });
 }
 

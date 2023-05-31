@@ -10,6 +10,7 @@ const questions = {
         "Add a department",
         "Add a role",
         "Add an employee",
+        "Update an employee",
       ],
       message: "Select the operation to perform",
     },
@@ -18,22 +19,12 @@ const questions = {
   addDept: [
     {
       type: "input",
-      name: "id",
-      message: "please enter an id for the department",
-    },
-    {
-      type: "input",
-      name: "name",
-      message: "please enter a name for the department",
+      name: "dept",
+      message: "What is the name of the department?",
     },
   ],
 
   addRole: [
-    {
-      type: "input",
-      name: "id",
-      message: "please enter an id for the department",
-    },
     {
       type: "input",
       name: "title",
@@ -45,18 +36,14 @@ const questions = {
       message: "please enter a salary for the role",
     },
     {
-      type: "input",
+      type: "list",
       name: "departmentId",
-      message: "please enter a department id for the role",
+      choices: [1, 2, 3, 4],
+      message: "please select a department id for the role",
     },
   ],
 
   addEmployee: [
-    {
-      type: "input",
-      name: "id",
-      message: "please enter an id for the employee",
-    },
     {
       type: "input",
       name: "firstName",
@@ -68,14 +55,36 @@ const questions = {
       message: "please enter a last name for the employee",
     },
     {
-      type: "input",
+      type: "list",
       name: "roleId",
-      message: "please enter a role id for the employee",
+      message: "Select a role id",
+      choices: [1, 2, 3, 4],
+    },
+    {
+      type: "list",
+      name: "managerId",
+      message: "please select a manager id for the employee",
+      choices: [1, 2, 5],
+    },
+  ],
+  updateEmployee: [
+    {
+      type: "list",
+      name: "Name",
+      choices: [
+        "Mario Mario",
+        "John Brown",
+        "Dan Foster",
+        "Josh Green",
+        "Ben Martin",
+        "Danial Chou",
+      ],
+      message: "please select the employees name to update",
     },
     {
       type: "input",
-      name: "managerId",
-      message: "please enter a manager id for the employee",
+      name: "roleId",
+      message: "please enter a role id for the employee",
     },
   ],
 };
