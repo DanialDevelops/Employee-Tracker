@@ -3,6 +3,7 @@ const mysql = require("mysql2");
 const cTable = require("console.table");
 const questions = require("./questions.js");
 
+
 const db = mysql.createConnection(
   {
     host: "localhost",
@@ -30,9 +31,6 @@ function menu() {
         break;
       case "Add a role":
         addRole();
-        break;
-      case "Add an employee":
-        addEmployee();
         break;
       case "Add an employee":
         addEmployee();
@@ -79,7 +77,6 @@ function addDepartment() {
         if (err) console.log(err);
         console.table(data);
         viewAllDepartments();
-        menu();
       }
     );
   });
@@ -95,7 +92,7 @@ function addRole() {
         if (err) console.log(err);
         console.table(data);
         viewAllRoles();
-        menu();
+        
       }
     );
   });
@@ -111,7 +108,7 @@ function addEmployee() {
         if (err) console.log(err);
         console.table(data);
         viewAllEmployees();
-        menu();
+        
       }
     );
   });
@@ -119,9 +116,9 @@ function addEmployee() {
 function updateEmployee() {
   inquirer.prompt(questions.updateEmployee).then((data) => {
     console.log(data);
-    let { Name, roleId} = data
-    let firstName = Name.split(" ")[0]
-    let lastName = Name.split(" ")[1]
+    let { employeeName, roleId} = data
+    let firstName = employeeName.split(" ")[0]
+    let lastName = employeeName.split(" ")[1]
     console.log(firstName, lastName)
     db.query(
       "UPDATE employee SET role_id = ? WHERE first_name = ? AND last_name = ?",
@@ -130,10 +127,10 @@ function updateEmployee() {
         if (err) console.log(err);
         console.table(data);
         viewAllEmployees()
-        menu();
+        
       }
     );
   });
 }
 
-menu();
+menu()

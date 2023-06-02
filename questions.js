@@ -70,7 +70,7 @@ const questions = {
   updateEmployee: [
     {
       type: "list",
-      name: "Name",
+      name: "employeeName",
       choices: [
         "Mario Mario",
         "John Brown",
